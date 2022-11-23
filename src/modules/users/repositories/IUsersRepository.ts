@@ -9,7 +9,7 @@ interface IUserRepository {
   findById(id: string): Promise<User | null>;
   findByCpf(cpf: number): Promise<User | null>;
   findByEmail(email: string): Promise<User | null>;
-  updateUser(data: IUpdateUserDTO): Promise<User>;
+  updateUser(id: string, data: IUpdateUserDTO): Promise<User>;
   deleteUser(id: string): Promise<User[]>;
 }
 
