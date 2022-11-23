@@ -8,6 +8,8 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocs from '@config/swagger';
 import AppError from '@shared/errors/AppError';
+import routes from './routes';
+import '@shared/container';
 
 const app = express();
 
@@ -17,9 +19,7 @@ app.use(express.json());
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.get('/test', (req: Request, res: Response) => res.json({
-  message: 'Hello World!',
-}));
+app.use(routes);
 
 app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
   if (err instanceof AppError) {
