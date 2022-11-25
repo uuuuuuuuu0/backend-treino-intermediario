@@ -11,10 +11,10 @@ export default class UsersRepository implements IUserRepository {
     this.prismaClient = client.user;
   }
 
-  createUser({
+  public async createUser({
     email, name, cpf, password,
   }: ICreateUserDTO): Promise<User> {
-    const createdUser = this.prismaClient.create({
+    const createdUser = await this.prismaClient.create({
       data: {
         email, name, cpf, password,
       },
@@ -23,34 +23,34 @@ export default class UsersRepository implements IUserRepository {
     return createdUser;
   }
 
-  readUsers(): Promise<User[]> {
-    const allUsers = this.prismaClient.findMany();
+  public async readUsers(): Promise<User[]> {
+    const allUsers = await this.prismaClient.findMany();
 
     return allUsers;
   }
 
-  findById(id: string): Promise<User | null> {
-    const foundUser = this.prismaClient.findUnique({ where: { id } });
+  public async findById(id: string): Promise<User | null> {
+    const foundUser = await this.prismaClient.findUnique({ where: { id } });
 
     return foundUser;
   }
 
-  findByCpf(cpf: number): Promise<User | null> {
-    const foundUser = this.prismaClient.findUnique({ where: { cpf } });
+  public async findByCpf(cpf: number): Promise<User | null> {
+    const foundUser = await this.prismaClient.findUnique({ where: { cpf } });
 
     return foundUser;
   }
 
-  findByEmail(email: string): Promise<User | null> {
-    const foundUser = this.prismaClient.findUnique({ where: { email } });
+  public async findByEmail(email: string): Promise<User | null> {
+    const foundUser = await this.prismaClient.findUnique({ where: { email } });
 
     return foundUser;
   }
 
-  updateUser(id: string, {
+  public async updateUser(id: string, {
     email, name, cpf, password,
   }: IUpdateUserDTO): Promise<User> {
-    const updatedUser = this.prismaClient.update({
+    const updatedUser = await this.prismaClient.update({
       where: {
         id,
       },
@@ -61,9 +61,9 @@ export default class UsersRepository implements IUserRepository {
     return updatedUser;
   }
 
-  deleteUser(id: string): Promise<User[]> {
+  public async deleteUser(id: string): Promise<User[]> {
     this.prismaClient.delete({ where: { id } });
-    const allUsers = this.prismaClient.findMany();
+    const allUsers = await this.prismaClient.findMany();
     return allUsers;
   }
 }
