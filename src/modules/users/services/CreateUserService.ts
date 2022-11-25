@@ -5,16 +5,18 @@ import { inject, injectable } from 'tsyringe';
 import ICreateUserDTO from '../dtos/ICreateUserDTO';
 import IUserRepository from '../repositories/IUsersRepository';
 
+type IRequest = ICreateUserDTO;
+
 @injectable()
 export default class CreateUserService {
   constructor(
-        @inject('UsersRepository')
-        private usersRepository: IUserRepository,
+    @inject('UsersRepository')
+    private usersRepository: IUserRepository,
   ) { }
 
   public async execute({
     name, email, cpf, password,
-  }: ICreateUserDTO): Promise<User> {
+  }: IRequest): Promise<Omit<User, 'password'>> {
     const checkIfUserWithSameEmailExists = await this.usersRepository.findByEmail(email);
     const checkIfUserWithSameCpfExists = await this.usersRepository.findByCpf(cpf);
 
@@ -27,7 +29,7 @@ export default class CreateUserService {
 
     const hashedPassword = await hash(password, 8);
 
-    const createdUser = await this.usersRepository.createUser(
+    const { password: _, ...userWithoutPassword } = await this.usersRepository.createUser(
       {
         name,
         email,
@@ -35,6 +37,7 @@ export default class CreateUserService {
         password: hashedPassword,
       },
     );
-    return createdUser;
+
+    return userWithoutPassword;
   }
 }
