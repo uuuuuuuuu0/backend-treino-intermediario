@@ -5,7 +5,9 @@ import { inject, injectable } from 'tsyringe';
 import IUpdateUserDTO from '../dtos/IUpdateUserDTO';
 import IUserRepository from '../repositories/IUsersRepository';
 
-type IRequest = Partial<IUpdateUserDTO>;
+type IRequest = Partial<IUpdateUserDTO> & {
+  id: string;
+};
 
 @injectable()
 export default class UpdateUserService {
@@ -15,8 +17,8 @@ export default class UpdateUserService {
   ) { }
 
   public async execute({
-    name, email, cpf, password,
-  }: IRequest, id: string): Promise<Omit<User, 'password'>> {
+    id, name, email, cpf, password,
+  }: IRequest): Promise<Omit<User, 'password'>> {
     if (email) {
       const checkNewEmail = await this.usersRepository.findByEmail(email);
       if (checkNewEmail) {
