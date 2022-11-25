@@ -55,7 +55,10 @@ export default class UsersRepository implements IUserRepository {
         id,
       },
       data: {
-        email, name, cpf, password,
+        email: email || undefined,
+        name: name || undefined,
+        cpf: cpf || undefined,
+        password: password || undefined,
       },
     });
     return updatedUser;
