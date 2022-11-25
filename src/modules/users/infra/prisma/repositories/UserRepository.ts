@@ -65,7 +65,7 @@ export default class UsersRepository implements IUserRepository {
   }
 
   public async deleteUser(id: string): Promise<User[]> {
-    this.prismaClient.delete({ where: { id } });
+    const _ = await this.prismaClient.delete({ where: { id } });
     const allUsers = await this.prismaClient.findMany();
     return allUsers;
   }
