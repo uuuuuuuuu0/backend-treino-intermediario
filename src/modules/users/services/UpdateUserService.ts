@@ -17,7 +17,6 @@ export default class UpdateUserService {
   public async execute({
     name, email, cpf, password,
   }: IRequest, id: string): Promise<Omit<User, 'password'>> {
-    // Informations not found is a middware check ??
     if (email) {
       const checkNewEmail = await this.usersRepository.findByEmail(email);
       if (checkNewEmail) {
@@ -52,7 +51,6 @@ export default class UpdateUserService {
         name,
         email,
         cpf,
-        password,
       },
     );
     return updatedUserWithoutPassword;
