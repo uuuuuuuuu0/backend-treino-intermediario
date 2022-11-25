@@ -1,5 +1,6 @@
 import CreateUserService from '@modules/users/services/CreateUserService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
+import ReadUsersService from '@modules/users/services/ReadUsersService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
@@ -17,6 +18,14 @@ export default class UsersController {
     });
 
     return res.json(user);
+  }
+
+  public async read(req: Request, res: Response): Promise<Response> {
+    const readUsers = container.resolve(ReadUsersService);
+
+    const users = await readUsers.execute();
+
+    return res.json(users);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
