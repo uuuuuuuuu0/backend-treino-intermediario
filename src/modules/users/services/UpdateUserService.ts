@@ -8,7 +8,7 @@ import IUserRepository from '../repositories/IUsersRepository';
 type IRequest = Partial<IUpdateUserDTO>;
 
 @injectable()
-export default class CreateUserService {
+export default class UpdateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUserRepository,
