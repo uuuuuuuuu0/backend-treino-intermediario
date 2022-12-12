@@ -1,0 +1,16 @@
+model User {
+    id   String @id @default(uuid())
+    name String
+    pius Piu[]
+}
+
+model Piu {
+    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    id         String   @id @default(uuid())
+    userId     String
+    text       String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    @@map("pius")
+}
