@@ -6,7 +6,8 @@
   "author": "uuuuuuuuu0 <pedrovrs@usp.br>",
   "license": "MIT",
   "scripts": {
-    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --exit-child --ignore-watch node_modules src/shared/infra/http/server.ts"
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --exit-child --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "docs": "npx insomnia-documenter --output docs"
   },
   "prisma": {
     "schema": "src/shared/infra/prisma/schema.prisma"
